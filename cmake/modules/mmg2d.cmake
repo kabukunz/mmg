@@ -148,8 +148,8 @@ ENDIF ( )
 #####
 ###############################################################################
 
-ADD_AND_INSTALL_EXECUTABLE ( ${PROJECT_NAME}2d copy_2d_headers
-  "${mmg2d_library_files}" ${mmg2d_main_file} )
+# ADD_AND_INSTALL_EXECUTABLE ( ${PROJECT_NAME}2d copy_2d_headers
+#   "${mmg2d_library_files}" ${mmg2d_main_file} )
 
 ###############################################################################
 #####

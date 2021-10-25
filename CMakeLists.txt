@@ -322,14 +322,14 @@ IF (LIBMMG2D_STATIC OR LIBMMG2D_SHARED)
 ELSE()
   SET(LIBMMG2D_INTERNAL OFF )
 ENDIF()
-CMAKE_DEPENDENT_OPTION (
-  TEST_LIBMMG2D "Compile tests for the mmg2d library" OFF
-  "BUILD_MMG2D;LIBMMG2D_INTERNAL" OFF
-  )
+# CMAKE_DEPENDENT_OPTION (
+#   TEST_LIBMMG2D "Compile tests for the mmg2d library" OFF
+#   "BUILD_MMG2D;LIBMMG2D_INTERNAL" OFF
+#   )
 
-CMAKE_DEPENDENT_OPTION(
-  MMG2D_CI "Enable/Disable continuous integration for mmg2d" ON
-  "BUILD_TESTING;BUILD_MMG2D" OFF)
+# CMAKE_DEPENDENT_OPTION(
+#   MMG2D_CI "Enable/Disable continuous integration for mmg2d" ON
+#   "BUILD_TESTING;BUILD_MMG2D" OFF)
 
 #------------------------------- mmgs
 CMAKE_DEPENDENT_OPTION ( LIBMMGS_STATIC "Compile the mmgs static library" ${BUILD_STATIC_LIBS}
