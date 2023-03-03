@@ -1,6 +1,6 @@
 #!/bin/bash
 
-build_mmg2d.sh
-compile_mmg2d.sh
-install_mmg2d.sh
-pack_mmg2d.sh
+./scripts/build_mmg2d.sh
+./scripts/compile_mmg2d.sh
+./scripts/install_mmg2d.sh
+./scripts/pack_mmg2d.sh

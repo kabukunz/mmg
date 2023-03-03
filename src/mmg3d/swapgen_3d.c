@@ -32,7 +32,9 @@
  * \copyright GNU Lesser General Public License.
  */
 
-#include "inlined_functions_3d.h"
+#include "libmmg3d.h"
+#include "inlined_functions_3d_private.h"
+#include "mmg3dexterns_private.h"
 
 /**
  * \param mesh pointer toward the mesh structure
@@ -52,13 +54,13 @@
  * configuration. The shell of edge is built during the process.
  *
  */
-int MMG5_chkswpgen(MMG5_pMesh mesh,MMG5_pSol met,int start,int ia,
-                    int *ilist,int *list,double crit,int8_t typchk) {
+MMG5_int MMG5_chkswpgen(MMG5_pMesh mesh,MMG5_pSol met,MMG5_int start,int ia,
+                    int *ilist,int64_t *list,double crit,int8_t typchk) {
   MMG5_pTetra    pt,pt0;
   MMG5_pPoint    p0;
   double         calold,calnew,caltmp;
-  int            na,nb,np,adj,piv,npol,refdom,k,l,iel;
-  int            *adja,pol[MMG3D_LMAX+2];
+  int            npol,k,l;
+  MMG5_int       np,na,nb,piv,*adja,adj,pol[MMG3D_LMAX+2],iel,refdom;
   int8_t         i,ip,ier,ifac;
 
   pt  = &mesh->tetra[start];
@@ -72,7 +74,7 @@ int MMG5_chkswpgen(MMG5_pMesh mesh,MMG5_pSol met,int start,int ia,
   /* Store shell of ia in list, and associated pseudo polygon in pol */
   (*ilist) = 0;
   npol = 0;
-  list[(*ilist)] = 6*start+ia;
+  list[(*ilist)] = 6*(int64_t)start+ia;
   (*ilist)++;
   adja = &mesh->adja[4*(start-1)+1];
   adj  = adja[MMG5_ifar[ia][0]];      // start travelling by face (ia,0)
@@ -104,7 +106,7 @@ int MMG5_chkswpgen(MMG5_pMesh mesh,MMG5_pSol met,int start,int ia,
     /* identification of edge number in tetra adj */
     if ( !MMG3D_findEdge(mesh,pt,adj,na,nb,1,NULL,&i) ) return -1;
 
-    list[(*ilist)] = 6*adj +i;
+    list[(*ilist)] = 6*(int64_t)adj +i;
     (*ilist)++;
     /* overflow */
     if ( (*ilist) > MMG3D_LMAX-3 )  return 0;
@@ -146,13 +148,17 @@ int MMG5_chkswpgen(MMG5_pMesh mesh,MMG5_pSol met,int start,int ia,
     ier = 1;
 
     if ( mesh->info.fem ) {
+      /* Do not create internal edges between boundary points */
       p0 = &mesh->point[np];
       if ( p0->tag & MG_BDY ) {
+        /* One of the vertices of the pseudo polygon is boundary */
         for (l=0; l<npol;l++) {
           if ( k < npol-1 ) {
+            /* Skip the two elts of the pseudo polygon that contains p0 */
             if ( l == k || l == k+1 )  continue;
           }
           else {
+            /* Skip the two elts of the pseudo polygon that contains p0 (for k==npol-1) */
             if ( l == npol-1 || l == 0 )  continue;
           }
           iel = pol[l] / 4;
@@ -160,6 +166,7 @@ int MMG5_chkswpgen(MMG5_pMesh mesh,MMG5_pSol met,int start,int ia,
           pt = &mesh->tetra[iel];
           p0 = &mesh->point[pt->v[ip]];
           if ( p0->tag & MG_BDY ) {
+            /* Another vertex is boundary */
             ier = 0;
             break;
           }
@@ -172,14 +179,32 @@ int MMG5_chkswpgen(MMG5_pMesh mesh,MMG5_pSol met,int start,int ia,
     for (l=0; l<(*ilist); l++) {
       /* Do not consider tets of the shell of collapsed edge */
       if ( k < npol-1 ) {
+        /* Skip the two elts of the pseudo polygon that contains np */
         if ( l == k || l == k+1 )  continue;
       }
       else {
+        /* Skip the two elts of the pseudo polygon that contains np for the last polygon elt */
         if ( l == npol-1 || l == 0 )  continue;
       }
       iel = list[l] / 6;
       i   = list[l] % 6;
       pt  = &mesh->tetra[iel];
+
+      /* Check that we will not insert a node that we will fail to collapse
+       * (recreation of an existing element) */
+      adja = &mesh->adja[4*(iel-1)+1];
+      adj = adja[MMG5_iare[i][0]]/4;
+      piv = adja[MMG5_iare[i][0]]%4;
+      if ( adj && mesh->tetra[adj].v[piv]==np ) {
+        ier = 0;
+        break;
+      }
+      adj = adja[MMG5_iare[i][1]]/4;
+      piv = adja[MMG5_iare[i][1]]%4;
+      if ( adj && mesh->tetra[adj].v[piv]==np ) {
+        ier = 0;
+        break;
+      }
 
       /* Prevent from creating a tetra with 4 bdy vertices */
       if ( mesh->point[np].tag & MG_BDY ) {
@@ -243,14 +268,15 @@ int MMG5_chkswpgen(MMG5_pMesh mesh,MMG5_pSol met,int start,int ia,
  * Perform swap of edge whose shell is passed according to configuration nconf.
  *
  */
-int MMG5_swpgen(MMG5_pMesh mesh,MMG5_pSol met,int nconf,int ilist,int *list,
+int MMG5_swpgen(MMG5_pMesh mesh,MMG5_pSol met,MMG5_int nconf,int ilist,int64_t *list,
                  MMG3D_pPROctree PROctree, int8_t typchk) {
   MMG5_pTetra    pt;
   MMG5_pPoint    p0,p1;
-  int       iel,na,nb,np,nball,src,ret,start;
-  double    m[3];
-  int8_t    ia,ip,iq;
-  int       ier;
+  int            nball,ret,start;
+  MMG5_int       src,iel,na,nb,np;
+  double         m[3];
+  int8_t         ia,ip,iq;
+  int            ier;
 
   iel = list[0] / 6;
   ia  = list[0] % 6;
@@ -314,7 +340,7 @@ int MMG5_swpgen(MMG5_pMesh mesh,MMG5_pSol met,int nconf,int ilist,int *list,
   }
   assert(ip<4);
 
-  memset(list,0,(MMG3D_LMAX+2)*sizeof(int));
+  memset(list,0,(MMG3D_LMAX+2)*sizeof(MMG5_int));
   nball = MMG5_boulevolp(mesh,start,ip,list);
 
   ier = MMG5_colver(mesh,met,list,nball,iq,typchk);
@@ -323,7 +349,13 @@ int MMG5_swpgen(MMG5_pMesh mesh,MMG5_pSol met,int nconf,int ilist,int *list,
       __func__);
     return -1;
   }
-  else if ( ier ) MMG3D_delPt(mesh,ier);
+  else if ( ier ) {
+    MMG3D_delPt(mesh,ier);
+  }
+
+  /* Check for non convex situation */
+  assert ( ier && "Unable to collapse the point created during the internal swap");
+
 
   return 1;
 }
