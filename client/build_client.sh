@@ -3,7 +3,6 @@
 # clean
 rm -rf client/build
 rm -rf client/bin
-rm -rf client/init*.*
 
 # build mmg
 client/build_mmg2d.sh
@@ -22,3 +21,5 @@ bin/mmg2dclient \
     init_out.mesh
 
 cd ..
+
+rm -rf client/init*.*
