@@ -35,8 +35,6 @@ message(STATUS "MMG_INST: " ${MMG_INST})
 
 set(MMG_DIR "${MMG_INST}")
 
-message(STATUS "MMG2D_INCLUDE_DIRS: " ${MMG2D_INCLUDE_DIRS})
-
 list(APPEND CMAKE_MODULE_PATH "${MMG_SRC}/cmake/tools")
 
 set(MMG_INCDIR "${MMG_DIR}/include")
@@ -45,6 +43,7 @@ set(MMG_LIBDIR "${MMG_DIR}/lib")
 find_package(MMG2D REQUIRED)
     # HINTS "${MMG_DIR}/lib/cmake/mmg")
 
+message(STATUS "MMG2D_INCLUDE_DIRS: " ${MMG2D_INCLUDE_DIRS})
 message(STATUS "MMG2D_LIBRARIES: " ${MMG2D_LIBRARIES})
 
 add_library(MMG2D_DLL SHARED IMPORTED)
