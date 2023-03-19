@@ -1,6 +1,7 @@
 #!/bin/bash
 
 rm -rf build/Release
+
 cmake -H. -B build/Release -G Ninja \
 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
 -DCMAKE_BUILD_TYPE=Release \

@@ -14,7 +14,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 # PROJECT
 #
 
-project(mmg2dclient)
+project(mmg2d_client)
 
 #
 # MMG
