@@ -1,6 +1,10 @@
 #!/bin/bash
 
-rm -rf build/Release
+export MMG_SRC=$(pwd)
+export MMG_INST="${MMG_SRC}/install"
+
+rm -rf "${MMG_SRC}/build/Release"
+rm -rf "${MMG_INST}"
 
 cmake -H. -B build/Release -G Ninja \
 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
@@ -12,4 +16,4 @@ cmake -H. -B build/Release -G Ninja \
 -DUSE_SCOTCH=OFF \
 -DUSE_ELAS=OFF \
 -DUSE_VTK=OFF \
--DCMAKE_INSTALL_PREFIX:PATH=install
+-DCMAKE_INSTALL_PREFIX:PATH=$MMG_INST

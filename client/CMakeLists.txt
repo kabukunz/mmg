@@ -27,8 +27,12 @@ project(mmg2d_client)
 #     message(STATUS "MMG_DIR: " "${MMG_DIR}")
 # endif()
 
-set(MMG_SRC "/Users/max/Developer/Stage/Workspace/3D/mmg_int/mmg/")
-set(MMG_INST "${MMG_SRC}/build/Release/install/")
+# set(MMG_SRC "/Users/max/Developer/Stage/Workspace/3D/mmg_int/mmg/")
+# set(MMG_INST "${MMG_SRC}/build/Release/install/")
+
+message(STATUS "MMG_SRC: " ${MMG_SRC})
+message(STATUS "MMG_INST: " ${MMG_INST})
+
 set(MMG_DIR "${MMG_INST}")
 
 message(STATUS "MMG2D_INCLUDE_DIRS: " ${MMG2D_INCLUDE_DIRS})
