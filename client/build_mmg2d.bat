@@ -1,6 +1,4 @@
 
-@REM rmdir /S /Q .\build
-
 set MMG_SRC=%cd%
 set MMG_BUILD=%MMG_SRC%\build\Release
 set MMG_INST=%MMG_SRC%\install
