@@ -1,7 +1,7 @@
 
 @REM clean
 del /Q /F client\build
-del /Q /F client\bin
+del /Q /F client\bin 
 
 @REM build mmg 
 call client\build_mmg2d.bat
