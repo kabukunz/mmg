@@ -34,5 +34,6 @@ include/*
 
 .DS_Store
 
-client
+client/build
+client/bin
 install

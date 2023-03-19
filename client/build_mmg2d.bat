@@ -1,0 +1,27 @@
+
+@REM rmdir /S /Q .\build
+
+set MMG_SRC=%cd%
+set MMG_BUILD=%MMG_SRC%\build\Release
+set MMG_INST=%MMG_SRC%\install
+
+del /Q /F %MMG_BUILD% 
+del /Q /F %MMG_INST%
+
+cmake -B %MMG_BUILD% -G "Ninja" ^
+-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE ^
+-DCMAKE_BUILD_TYPE=Release ^
+ ^
+-DBUILD=MMG2D ^
+-DBUILD_SHARED_LIBS=ON ^
+-DLIBMMG2D_STATIC=OFF ^
+-DLIBMMG2D_SHARED=ON ^
+-DUSE_SCOTCH=OFF ^
+-DUSE_ELAS=OFF ^
+-DUSE_VTK=OFF ^
+-DBUILD_TESTING=OFF ^
+-DTEST_LIBMMG2D=OFF ^
+-DCMAKE_INSTALL_PREFIX:PATH=%MMG_INST%
+
+cmake --build %MMG_BUILD%
+cmake --build %MMG_BUILD% --target install
