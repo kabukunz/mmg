@@ -30,15 +30,23 @@ project(mmg2d_client)
 # set(MMG_SRC "/Users/max/Developer/Stage/Workspace/3D/mmg_int/mmg/")
 # set(MMG_INST "${MMG_SRC}/build/Release/install/")
 
-message(STATUS "MMG_SRC: " ${MMG_SRC})
-message(STATUS "MMG_INST: " ${MMG_INST})
+set(MMG_SRC "${CMAKE_SOURCE_DIR}/..")
+set(MMG_DIR "${CMAKE_SOURCE_DIR}/../install")
 
-set(MMG_DIR "${MMG_INST}")
+message(STATUS "MMG_SRC: " ${MMG_SRC})
+message(STATUS "MMG_DIR: " ${MMG_DIR})
 
 list(APPEND CMAKE_MODULE_PATH "${MMG_SRC}/cmake/tools")
 
 set(MMG_INCDIR "${MMG_DIR}/include")
 set(MMG_LIBDIR "${MMG_DIR}/lib")
+set(MMG_BINDIR "${MMG_DIR}/bin")
+
+# if(WINDOWS)
+#     set(MMG_LIBDIR "${MMG_DIR}/bin")
+# else()
+#     set(MMG_LIBDIR "${MMG_DIR}/lib")
+# endif()
 
 find_package(MMG2D REQUIRED)
     # HINTS "${MMG_DIR}/lib/cmake/mmg")
@@ -47,7 +55,7 @@ message(STATUS "MMG2D_INCLUDE_DIRS: " ${MMG2D_INCLUDE_DIRS})
 message(STATUS "MMG2D_LIBRARIES: " ${MMG2D_LIBRARIES})
 
 add_library(MMG2D_DLL SHARED IMPORTED)
-set_property(TARGET MMG2D_DLL PROPERTY IMPORTED_LOCATION "${MMG_DIR}/lib/mmg2d.dll")
+set_property(TARGET MMG2D_DLL PROPERTY IMPORTED_LOCATION "${MMG_BINDIR}/mmg2d.dll")
 
 # message(STATUS "FOO LIBS: " $<TARGET_LINKER_FILE_NAME:MMG2D_DLL>)
 

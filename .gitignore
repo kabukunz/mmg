@@ -33,3 +33,6 @@ include/*
 *.o
 
 .DS_Store
+
+client
+install
