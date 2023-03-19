@@ -1,19 +1,26 @@
 #!/bin/bash
 
 export MMG_SRC=$(pwd)
-export MMG_INST="${MMG_SRC}/install"
+export MMG_BUILD="${MMG_SRC}/build"
+export MMG_INSTALL="${MMG_SRC}/install"
 
-rm -rf "${MMG_SRC}/build/Release"
-rm -rf "${MMG_INST}"
+rm -rf $MMG_BUILD
+rm -rf $MMG_INSTALL
 
-cmake -H. -B build/Release -G Ninja \
+cmake -H. -B $MMG_BUILD -G Ninja \
 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
 -DCMAKE_BUILD_TYPE=Release \
+\
 -DBUILD=MMG2D \
+-DBUILD_TESTING=OFF \
+-DTEST_LIBMMG2D=OFF \
 -DBUILD_SHARED_LIBS=ON \
 -DLIBMMG2D_STATIC=OFF \
 -DLIBMMG2D_SHARED=ON \
 -DUSE_SCOTCH=OFF \
 -DUSE_ELAS=OFF \
 -DUSE_VTK=OFF \
--DCMAKE_INSTALL_PREFIX:PATH=$MMG_INST
+-DCMAKE_INSTALL_PREFIX:PATH=$MMG_INSTALL
+
+cmake --build $MMG_BUILD
+cmake --build $MMG_BUILD --target install
