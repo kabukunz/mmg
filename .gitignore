@@ -37,3 +37,4 @@ include/*
 client/build
 client/bin
 install
+pack
