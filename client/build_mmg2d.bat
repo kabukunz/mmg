@@ -1,6 +1,6 @@
 
 set MMG_SRC=%cd%
-set MMG_BUILD=%MMG_SRC%\build\Release
+set MMG_BUILD=%MMG_SRC%\build
 set MMG_INSTALL=%MMG_SRC%\install
 
 del /Q /F %MMG_BUILD% 
