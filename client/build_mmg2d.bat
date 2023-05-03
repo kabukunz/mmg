@@ -6,7 +6,7 @@ set MMG_INSTALL=%MMG_SRC%\install
 del /Q /F %MMG_BUILD% 
 del /Q /F %MMG_INSTALL%
 
-cmake -B %MMG_BUILD% -G "Ninja" ^
+cmake -B %MMG_BUILD% -G Ninja ^
 -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE ^
 -DCMAKE_BUILD_TYPE=Release ^
  ^
@@ -23,3 +23,6 @@ cmake -B %MMG_BUILD% -G "Ninja" ^
 
 cmake --build %MMG_BUILD%
 cmake --build %MMG_BUILD% --target install
+
+cp %MMG_SRC%\client\square.mesh %MMG_INSTALL%\bin
+%MMG_INSTALL%\bin\mmg2d_O3 %MMG_INSTALL%\bin\square.mesh %MMG_INSTALL%\bin\square_out.mesh
