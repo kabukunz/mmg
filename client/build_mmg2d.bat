@@ -26,3 +26,4 @@ cmake --build %MMG_BUILD% --target install
 
 copy %MMG_SRC%\client\square.mesh %MMG_INSTALL%\bin
 %MMG_INSTALL%\bin\mmg2d_O3 %MMG_INSTALL%\bin\square.mesh %MMG_INSTALL%\bin\square_out.mesh
+del /Q /F %MMG_INSTALL%\bin\square*.* 

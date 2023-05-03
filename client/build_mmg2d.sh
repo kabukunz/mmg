@@ -28,3 +28,5 @@ cmake --build $MMG_BUILD --target install
 export LD_LIBRARY_PATH="${MMG_INSTALL}/lib"
 cp "${MMG_SRC}/client/square.mesh" "${MMG_INSTALL}/bin"
 "${MMG_INSTALL}/bin/mmg2d_O3" "${MMG_INSTALL}/bin/square.mesh" "${MMG_INSTALL}/bin/square_out.mesh"
+rm -rf "${MMG_INSTALL}/bin/square*"
+
