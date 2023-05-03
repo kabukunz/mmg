@@ -24,5 +24,5 @@ cmake -B %MMG_BUILD% -G Ninja ^
 cmake --build %MMG_BUILD%
 cmake --build %MMG_BUILD% --target install
 
-cp %MMG_SRC%\client\square.mesh %MMG_INSTALL%\bin
+copy %MMG_SRC%\client\square.mesh %MMG_INSTALL%\bin
 %MMG_INSTALL%\bin\mmg2d_O3 %MMG_INSTALL%\bin\square.mesh %MMG_INSTALL%\bin\square_out.mesh
