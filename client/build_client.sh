@@ -8,15 +8,19 @@ rm -rf client/bin
 client/build_mmg2d.sh
 
 export MMG_SRC=$(pwd)
-export MMG_INSTALL="${MMG_SRC}/install"
+export MMG_INSTALL_DIR="${MMG_SRC}/install"
+
+if [ -z ${MMG_BUILD_TYPE} ] ; then
+    export MMG_BUILD_TYPE="Release"
+fi
 
 cd client
 
 # build client
 cmake -B build -G "Ninja" \
--DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_BUILD_TYPE=${MMG_BUILD_TYPE} \
 -DMMG_SRC=$MMG_SRC \
--DMMG_INSTALL=$MMG_INSTALL
+-DMMG_INSTALL=$MMG_INSTALL_DIR
 
 cmake --build build
 
