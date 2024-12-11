@@ -1,0 +1,29 @@
+
+set MMG_SRC=%cd%
+set MMG_BUILD=%MMG_SRC%\build
+set MMG_INSTALL=%MMG_SRC%\install
+
+del /Q /F %MMG_BUILD% 
+del /Q /F %MMG_INSTALL%
+
+cmake -B %MMG_BUILD% -G Ninja ^
+-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE ^
+-DCMAKE_BUILD_TYPE=Release ^
+ ^
+-DBUILD=MMG2D ^
+-DBUILD_TESTING=OFF ^
+-DTEST_LIBMMG2D=OFF ^
+-DBUILD_SHARED_LIBS=ON ^
+-DLIBMMG2D_STATIC=OFF ^
+-DLIBMMG2D_SHARED=ON ^
+-DUSE_SCOTCH=OFF ^
+-DUSE_ELAS=OFF ^
+-DUSE_VTK=OFF ^
+-DCMAKE_INSTALL_PREFIX:PATH=%MMG_INSTALL%
+
+cmake --build %MMG_BUILD%
+cmake --build %MMG_BUILD% --target install
+
+copy %MMG_SRC%\client\square.mesh %MMG_INSTALL%\bin
+%MMG_INSTALL%\bin\mmg2d_O3 %MMG_INSTALL%\bin\square.mesh %MMG_INSTALL%\bin\square_out.mesh
+del /Q /F %MMG_INSTALL%\bin\square*.* 
