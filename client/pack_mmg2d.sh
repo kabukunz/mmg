@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export DIST="mmg-5.7.0-Darwin-19.5.0.zip"
+export DIST="mmg-5.8.0-Darwin-19.5.0.zip"
 
 mkdir pack
 cd install

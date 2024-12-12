@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set DIST=mmg-5.7.0-Windows-10.0.19043.zip
+set DIST=mmg-5.8.0-Windows-10.0.19043.zip
 
 mkdir pack
 cd install
