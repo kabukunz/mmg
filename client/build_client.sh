@@ -4,9 +4,6 @@
 rm -rf client/build
 rm -rf client/bin
 
-# build mmg
-client/build_mmg2d.sh
-
 export MMG_SRC=$(pwd)
 export MMG_INSTALL_DIR="${MMG_SRC}/install"
 
