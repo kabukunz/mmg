@@ -33,6 +33,7 @@ include/*
 *.o
 
 .DS_Store
+.vscode
 
 client/build
 client/bin
