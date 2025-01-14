@@ -5,12 +5,12 @@ set MMG_SRC=%cd%
 set MMG_BUILD_DIR=%MMG_SRC%\build
 set MMG_INSTALL_DIR=%MMG_SRC%\install
 
-echo Building MMG in %MMG_BUILD_TYPE% mode 
-
 @REM build type
 if NOT DEFINED "%MMG_BUILD_TYPE%" ( 
     set MMG_BUILD_TYPE=Release
 )
+
+echo Building MMG in %MMG_BUILD_TYPE% mode
 
 if "%MMG_BUILD_TYPE%" == "Release" (
     set MMG_BUILD_EXE=mmg2d_O3
