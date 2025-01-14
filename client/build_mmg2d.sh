@@ -5,6 +5,8 @@ export MMG_SRC=$(pwd)
 export MMG_BUILD_DIR="${MMG_SRC}/build"
 export MMG_INSTALL_DIR="${MMG_SRC}/install"
 
+echo Building MMG in ${MMG_BUILD_TYPE} mode
+
 # build type
 if [ -z ${MMG_BUILD_TYPE} ] ; then
     export MMG_BUILD_TYPE="Release"

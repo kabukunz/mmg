@@ -1,12 +1,14 @@
-echo OFF
+@REM echo OFF
 
 @REM setup
 set MMG_SRC=%cd%
 set MMG_BUILD_DIR=%MMG_SRC%\build
 set MMG_INSTALL_DIR=%MMG_SRC%\install
 
+echo Building MMG in %MMG_BUILD_TYPE% mode 
+
 @REM build type
-if NOT DEFINED "%MMG_BUILD_TYPE%" (
+if NOT DEFINED "%MMG_BUILD_TYPE%" ( 
     set MMG_BUILD_TYPE=Release
 )
 

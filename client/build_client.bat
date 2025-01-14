@@ -13,9 +13,6 @@ if NOT DEFINED "%MMG_BUILD_TYPE%" (
     set MMG_BUILD_TYPE=Release
 )
 
-@REM @REM build mmg 
-@REM call client\build_mmg2d.bat
-
 cd client
 
 @REM build client
