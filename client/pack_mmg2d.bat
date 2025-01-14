@@ -1,4 +1,4 @@
-#!/bin/bash
+echo OFF
 
 set DIST=mmg-5.8.0-Windows-10.0.19043.zip
 
